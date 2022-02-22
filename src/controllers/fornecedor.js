@@ -1,44 +1,44 @@
-const ReestruturacaoCognitiva = require("../models/reestruturacaoCognitiva");
+const Fornecedor = require("../models/fornecedor");
 
 module.exports = {
   // Função que faz a busca no banco.
   async read(request, response) {
-    const appList = await ReestruturacaoCognitiva.find();
+    const appList = await Fornecedor.find();
 
     return response.json(appList);
   },
   // Função que cria um registro no banco.
   async create(request, response) {
     const {
-      user,
-      data,
-      situacao,
-      pensamento,
-      emocao,
-      comportamento,
-      pensamentoAlternativo,
+      nome,
+      razaoSocial,
+      cnpj,
+      segmento,
+      endereco,
+      telefone,
+      email,
       priority,
     } = request.body;
 
     if (
-      !situacao ||
-      !pensamento ||
-      !emocao ||
-      !comportamento ||
-      !pensamentoAlternativo
+      !cnpj ||
+      !segmento ||
+      !endereco ||
+      !telefone ||
+      !email
     ) {
       return response
         .status(400)
-        .json({ error: "Necessário um titulo/anotação" });
+        .json({ error: "Um ou mais campo está vazio!" });
     }
-    const appCreated = await ReestruturacaoCognitiva.create({
-      user,
-      data,
-      situacao,
-      pensamento,
-      emocao,
-      comportamento,
-      pensamentoAlternativo,
+    const appCreated = await Fornecedor.create({
+      nome,
+      razaoSocial,
+      cnpj,
+      segmento,
+      endereco,
+      telefone,
+      email,
       priority,
     });
     return response.json(appCreated);
@@ -48,7 +48,7 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
-    const userDeleted = await ReestruturacaoCognitiva.findOneAndDelete({
+    const userDeleted = await Fornecedor.findOneAndDelete({
       _id: id,
     });
 
@@ -66,7 +66,7 @@ module.exports = {
   async read(request, response) {
     const priority = request.query;
 
-    const priorityNotes = await ReestruturacaoCognitiva.find(priority);
+    const priorityNotes = await Fornecedor.find(priority);
 
     return response.json(priorityNotes);
   },
@@ -75,7 +75,7 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
 
-    const app = await ReestruturacaoCognitiva.findOne({ _id: id });
+    const app = await Fornecedor.findOne({ _id: id });
 
     if (app.priority) {
       app.priority = false;
