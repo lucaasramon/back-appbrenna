@@ -4,9 +4,9 @@ const usuarioSchema = new mongoose.Schema({
   nome: String,
   email: String,
   endereco: String,
-  idade: Number,
-  numero: Number,
-  numeroEmergencia: Number,
+  idade: String,
+  numero: String,
+  numeroEmergencia: String,
   senha: String,
   priority: Boolean,
 });
