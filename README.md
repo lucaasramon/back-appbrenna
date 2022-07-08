@@ -1,6 +1,9 @@
 # Back end do projeto "[ProjetoReact](https://github.com/lucaasramon/ProjetoReact)"
 
-Um parágrafo da descrição do projeto vai aqui
+- Este projeto foi criando apenas para fins de aprendizagem, aqui eu tento adicionar o que estou tentando aprender no momento. 
+
+- Nesse mini sistema responsivo, permite que uma psicologa cadastre seus pacientes e permite o cadastro de algumas tarefas que são passadas
+ao decorrer do atendimento.
 
 ## 🚀 Começando
 
@@ -13,23 +16,31 @@ Consulte **Implantação** para saber como implantar o projeto.
 De que coisas você precisa para instalar o software e como instalá-lo?
 
 ```
-Dar exemplos
+Node.js
 ```
 
 ### 🔧 Instalação
 
 Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
 
-Diga como essa etapa será:
+Assim que o projeto for clonado, basta abrir seu cmd e adicionar o seguinte comando:
 
 ```
-Dar exemplos
+npm i
+```
+Assim todas as depedências serão instaladas.
+
+Depois rode o projeto com o seguinte comando:
+
+```
+npm run dev
 ```
 
-E repita:
+Se o projeto rodar como esperado, o nodemon vai ser apresentado logo abaixo da seguinte forma:
 
 ```
-Até finalizar
+[nodemon] restarting due to changes...`#f03c15`
+[nodemon] starting `node src/index.js``#f03c15`
 ```
 
 Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
