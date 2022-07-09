@@ -1,4 +1,4 @@
-# Back end do projeto "[ProjetoReact](https://github.com/lucaasramon/ProjetoReact)"
+# Back end do projeto "[front-appbrenna](https://github.com/lucaasramon/ProjetoReact)"
 
 - Este projeto foi criando apenas para fins de aprendizagem, aqui eu tento adicionar o que estou tentando aprender no momento. 
 
