@@ -1,0 +1,10 @@
+.env
+
+# dependencies
+/node_modules
+/node_modules/minimist
+/.pnp
+.pnp.js
+
+# production
+/build
