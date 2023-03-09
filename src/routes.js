@@ -3,7 +3,7 @@ const routes = express.Router();
 
 const appController = require("./controllers/appController");
 const auserController = require("./controllers/usuario");
-const reestruturacaoCognitiva = require("./controllers/reestruturacaoCognitiva");
+const equipes = require("./controllers/equipes");
 const priorityController = require("./controllers/priorityController");
 const contentController = require("./controllers/contentController");
 
@@ -18,9 +18,9 @@ routes.get("/usuario", auserController.read);
 routes.delete("/usuario/:id", auserController.delete);
 
 // Rota reestruturação Cognitiva
-routes.post("/reestruturacaoCognitiva", reestruturacaoCognitiva.create);
-routes.get("/reestruturacaoCognitiva", reestruturacaoCognitiva.read);
-routes.delete("/reestruturacaoCognitiva/:id", reestruturacaoCognitiva.delete);
+routes.post("/equipes", equipes.create);
+routes.get("/equipes", equipes.read);
+routes.delete("/equipes/:id", equipes.delete);
 
 // Rota priority
 routes.get("/priorities", priorityController.read);
