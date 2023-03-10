@@ -12,15 +12,15 @@ module.exports = {
     const {
       equipe,
       responsavel,
+      rifa,
+      valorBilhete,
+      componentesEquipe,
       numeroInicial,
       numeroFinal,
       priority,
     } = request.body;
 
-    if (
-      !numeroInicial ||
-      !numeroFinal
-    ) {
+    if (!numeroInicial || !numeroFinal) {
       return response
         .status(400)
         .json({ error: "Necessário um titulo/anotação" });
@@ -28,6 +28,9 @@ module.exports = {
     const appCreated = await Equipes.create({
       equipe,
       responsavel,
+      rifa,
+      valorBilhete,
+      componentesEquipe,
       numeroInicial,
       numeroFinal,
       priority,
