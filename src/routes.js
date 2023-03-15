@@ -4,6 +4,7 @@ const routes = express.Router();
 const appController = require("./controllers/appController");
 const auserController = require("./controllers/usuario");
 const equipes = require("./controllers/equipes");
+const consultaBilhetes = require("./controllers/consultaBilhetes");
 const priorityController = require("./controllers/priorityController");
 const contentController = require("./controllers/contentController");
 
@@ -11,6 +12,9 @@ const contentController = require("./controllers/contentController");
 routes.post("/appData", appController.create);
 routes.get("/appData", appController.read);
 routes.delete("/appData/:id", appController.delete);
+
+// Rota ConsultaBilhetes
+routes.get("/consultaBilhetes", consultaBilhetes.read);
 
 // Rota usuario
 routes.post("/usuario", auserController.create);
