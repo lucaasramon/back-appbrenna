@@ -4,6 +4,7 @@ const routes = express.Router();
 const appController = require('./controllers/appController');
 const auserController = require('./controllers/usuario');
 const equipes = require('./controllers/equipes');
+const bilhetes = require('./controllers/bilheteController');
 const priorityController = require('./controllers/priorityController');
 const contentController = require('./controllers/contentController');
 const gerenciarRifasController = require('./controllers/gerenciarRifasController');
@@ -22,6 +23,11 @@ routes.delete('/usuario/:id', auserController.delete);
 routes.post('/equipes', equipes.create);
 routes.get('/equipes', equipes.read);
 routes.delete('/equipes/:id', equipes.delete);
+
+// Rota bilhetes
+routes.post("/bilhetes", bilhetes.create);
+routes.get("/bilhetes", bilhetes.read);
+routes.delete("/bilhetes/:id", bilhetes.delete);
 
 // Rota priority
 routes.get('/priorities', priorityController.read);
