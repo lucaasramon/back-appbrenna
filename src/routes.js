@@ -5,6 +5,7 @@ const appController = require('./controllers/appController');
 const auserController = require('./controllers/usuario');
 const equipes = require('./controllers/equipes');
 const bilhetes = require('./controllers/bilheteController');
+const consultaBilhetes = require("./controllers/consultaBilhetes");
 const priorityController = require('./controllers/priorityController');
 const contentController = require('./controllers/contentController');
 const gerenciarRifasController = require('./controllers/gerenciarRifasController');
@@ -13,6 +14,9 @@ const gerenciarRifasController = require('./controllers/gerenciarRifasController
 routes.post('/appData', appController.create);
 routes.get('/appData', appController.read);
 routes.delete('/appData/:id', appController.delete);
+
+// Rota ConsultaBilhetes
+routes.get("/consultaBilhetes", consultaBilhetes.read);
 
 // Rota usuario
 routes.post('/usuario', auserController.create);
