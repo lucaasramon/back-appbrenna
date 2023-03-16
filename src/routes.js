@@ -15,6 +15,7 @@ routes.delete("/appData/:id", appController.delete);
 
 // Rota ConsultaBilhetes
 routes.get("/consultaBilhetes", consultaBilhetes.read);
+routes.get("/consultaBilhetes/:equipe", consultaBilhetes.readBilhetesEquipe);
 
 // Rota usuario
 routes.post("/usuario", auserController.create);

@@ -16,5 +16,21 @@ module.exports = {
     const priorityFilter = await BilhetesConsulta.find(priority);
 
     return response.json(priorityFilter);
-  }  
+  },
+  
+  //Função que busca os registros por equipe.
+  async readBilhetesEquipe(request, response) {
+    const { equipe } = request.params;
+
+    const app = await BilhetesConsulta.find({ equipe: equipe });
+
+    if (app.priority) {
+      app.priority = false;
+    } else {
+      app.priority = true;
+    }
+
+    return response.json(app);
+
+  },
 };
