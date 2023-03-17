@@ -1,21 +1,18 @@
-const Equipes = require("../models/equipes");
+const Bilhetes = require('../models/bilhetes');
 
 module.exports = {
   // Função que faz a busca no banco.
   async read(request, response) {
-    const appList = await Equipes.find();
+    const appList = await Bilhetes.find();
 
     return response.json(appList);
   },
   // Função que cria um registro no banco.
   async create(request, response) {
-
     if (!numeroInicial || !numeroFinal) {
-      return response
-        .status(400)
-        .json({ error: "Necessário um titulo/anotação" });
+      return response.status(400).json({ error: 'Necessário um titulo/anotação' });
     }
-    const appCreated = await Equipes.create(request.body);
+    const appCreated = await Bilhetes.create(request.body);
     return response.json(appCreated);
   },
 
@@ -23,7 +20,7 @@ module.exports = {
   async delete(request, response) {
     const { id } = request.params;
 
-    const equipeDeleted = await Equipes.findOneAndDelete({
+    const equipeDeleted = await Bilhetes.findOneAndDelete({
       _id: id,
     });
 
@@ -31,16 +28,14 @@ module.exports = {
       return response.json(equipeDeleted);
     }
 
-    return response
-      .status(401)
-      .json({ error: "Não foi encontrato nada para excluir" });
+    return response.status(401).json({ error: 'Não foi encontrato nada para excluir' });
   },
 
   // Função que busca registro no mongo a partir de uma condição.
   async read(request, response) {
     const priority = request.query;
 
-    const priorityNotes = await Equipes.find(priority);
+    const priorityNotes = await Bilhetes.find(priority);
 
     return response.json(priorityNotes);
   },
@@ -49,7 +44,7 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
 
-    const app = await Equipes.findOne({ _id: id });
+    const app = await Bilhetes.findOne({ _id: id });
 
     if (app.priority) {
       app.priority = false;
