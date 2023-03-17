@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bilheteSchema = new mongoose.Schema({
   rifa_id: Number,
   bilhete: Number,
-  equipe: Number,
+  equipe: String,
   bilheteVenda: [
     {
       meioPagamento: String,

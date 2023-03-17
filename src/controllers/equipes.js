@@ -1,4 +1,6 @@
 const Equipes = require("../models/equipes");
+const Bilhetes = require('../models/bilhetes');
+
 
 module.exports = {
   // Função que faz a busca no banco.
@@ -9,32 +11,13 @@ module.exports = {
   },
   // Função que cria um registro no banco.
   async create(request, response) {
-    const {
-      equipe,
-      responsavel,
-      rifa,
-      valorBilhete,
-      componentesEquipe,
-      numeroInicial,
-      numeroFinal,
-      priority,
-    } = request.body;
+    const appCreated = await Equipes.create(request.body);
 
-    if (!numeroInicial || !numeroFinal) {
-      return response
-        .status(400)
-        .json({ error: "Necessário um titulo/anotação" });
+    for (let i = appCreated.numeroInicial; i <= appCreated.numeroFinal; i++) {
+      const result = await Bilhetes.findOne({bilhete: i})
+      result.equipe = appCreated.equipe
+      await result.save();
     }
-    const appCreated = await Equipes.create({
-      equipe,
-      responsavel,
-      rifa,
-      valorBilhete,
-      componentesEquipe,
-      numeroInicial,
-      numeroFinal,
-      priority,
-    });
     return response.json(appCreated);
   },
 
