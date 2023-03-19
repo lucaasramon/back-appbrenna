@@ -1,10 +1,11 @@
-const BilhetesConsulta = require("../models/consultaBilhetes");
+const BilhetesConsulta = require("../models/bilhetes");
 
 module.exports = {
   // Função que faz a busca no banco.
   async read(request, response) {
-    const appList = await BilhetesConsulta.find();
-
+    const ordem = {bilhete:1}
+    const appList = await BilhetesConsulta.find().sort(ordem);
+    
     return response.json(appList);
   },
   
@@ -12,8 +13,8 @@ module.exports = {
   // Ex: Buscar somente STATUS = "PAGO"; EQUIPE = "VERDE"
   async read(request, response) {
     const priority = request.query;
-
-    const priorityFilter = await BilhetesConsulta.find(priority);
+    const ordem = {bilhete:1}
+    const priorityFilter = await BilhetesConsulta.find(priority).sort(ordem);
 
     return response.json(priorityFilter);
   },
@@ -21,8 +22,8 @@ module.exports = {
   //Função que busca os registros por equipe.
   async readBilhetesEquipe(request, response) {
     const { equipe } = request.params;
-
-    const app = await BilhetesConsulta.find({ equipe: equipe });
+    const ordem = {bilhete:1}
+    const app = await BilhetesConsulta.find({ equipe: equipe }).sort(ordem);
 
     if (app.priority) {
       app.priority = false;

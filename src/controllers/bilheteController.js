@@ -34,8 +34,8 @@ module.exports = {
   // Função que busca registro no mongo a partir de uma condição.
   async read(request, response) {
     const priority = request.query;
-
-    const priorityNotes = await Bilhetes.find(priority);
+    const ordem = {bilhete:1}
+    const priorityNotes = await Bilhetes.find(priority).sort(ordem);
 
     return response.json(priorityNotes);
   },
