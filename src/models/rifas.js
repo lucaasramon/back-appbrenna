@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const rifasSchema = new mongoose.Schema({
-  id_counter: Number,
+  rifa_id: Number,
   titulo: String,
   dataInicio: Date,
   dataFim: Date,

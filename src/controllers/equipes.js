@@ -5,7 +5,8 @@ const Bilhetes = require('../models/bilhetes');
 module.exports = {
   // Função que faz a busca no banco.
   async read(request, response) {
-    const appList = await Equipes.find();
+    const ordem = {equipe:1}
+    const appList = await Equipes.find().sort(ordem);
 
     return response.json(appList);
   },

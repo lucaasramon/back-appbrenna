@@ -14,7 +14,7 @@ module.exports = {
     valorTotal++;
     for (let i = 1; i <= valorTotal; i++) {
       Bilhete.create({
-        rifa_id: criarRifa.id_counter,
+        rifa_id: criarRifa.rifa_id,
         bilhete: i,
         equipe: "",
         bilheteVenda: [
