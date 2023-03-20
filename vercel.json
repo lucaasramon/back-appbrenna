@@ -3,7 +3,7 @@
     "version": 2,
     "public": true,
     "build": {
-        "src": "src/index.js",
+        "src": "api/index.js",
         "use": "@vercel/node"
     }, 
     "routes": [
@@ -14,7 +14,7 @@
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
         },
-        "dest": "src/index.js"
+        "dest": "api/index.js"
       }
     ]
   }
