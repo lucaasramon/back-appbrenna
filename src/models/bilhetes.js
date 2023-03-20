@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bilheteSchema = new mongoose.Schema({
-  rifa_id: Number,
+  rifa_id: String,
   bilhete: Number,
   equipe: String,
   bilheteVenda: [
@@ -10,6 +10,8 @@ const bilheteSchema = new mongoose.Schema({
       responsavelVenda: String,
       identificacaoPagamento: String,
       dataVenda: Date,
+      quemComprou: String,
+      valorBilhete: Number
     },
   ],
   status: Boolean,

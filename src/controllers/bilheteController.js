@@ -9,9 +9,6 @@ module.exports = {
   },
   // Função que cria um registro no banco.
   async create(request, response) {
-    if (!numeroInicial || !numeroFinal) {
-      return response.status(400).json({ error: 'Necessário um titulo/anotação' });
-    }
     const appCreated = await Bilhetes.create(request.body);
     return response.json(appCreated);
   },
