@@ -2,10 +2,6 @@
     "name": "back-appbrenna",
     "version": 2,
     "public": true,
-    "build": {
-        "src": "api/index.js",
-        "use": "@vercel/node"
-    }, 
     "routes": [
       {
         "src": "/(.*)",  
