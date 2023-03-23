@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const bilheteSchema = new mongoose.Schema({
   rifa_id: String,
+  nomeRifa: String,
   bilhete: Number,
   equipe: String,
   bilheteVenda: [

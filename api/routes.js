@@ -16,8 +16,8 @@ routes.get('/appData', appController.read);
 routes.delete('/appData/:id', appController.delete);
 
 // Rota ConsultaBilhetes
-routes.get("/consultaBilhetes", consultaBilhetes.read);
 routes.get("/consultaBilhetes/:equipe", consultaBilhetes.readBilhetesEquipe);
+routes.get("/consultaBilhetes/:id", consultaBilhetes.pegarParamURL);
 
 // Rota usuario
 routes.post('/usuario', auserController.create);
@@ -29,10 +29,13 @@ routes.post('/equipes', equipes.create);
 routes.get('/equipes', equipes.read);
 routes.delete('/equipes/:id', equipes.delete);
 
+
 // Rota bilhetes
 routes.post("/bilhetes", bilhetes.create);
 routes.get("/bilhetes", bilhetes.read);
 routes.delete("/bilhetes/:id", bilhetes.delete);
+routes.get("/bilhetes/:id", consultaBilhetes.pegarParamURL);
+
 
 // Rota priority
 routes.get('/priorities', priorityController.read);

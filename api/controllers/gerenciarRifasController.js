@@ -15,6 +15,7 @@ module.exports = {
     for (let i = 1; i <= valorTotal; i++) {
       Bilhete.create({
         rifa_id: criarRifa.rifa_id,
+        nomeRifa: criarRifa.titulo,
         bilhete: i,
         equipe: "",
         bilheteVenda: [
@@ -22,7 +23,9 @@ module.exports = {
             meioPagamento: "",
             responsavelVenda: "",
             identificacaoPagamento: "",
-            dataVenda: "",
+            dataVenda: null,
+            quemComprou: "",
+            valorBilhete: criarRifa.valorBilhete
           },
         ],
         status: false,
