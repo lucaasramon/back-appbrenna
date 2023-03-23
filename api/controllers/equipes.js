@@ -1,28 +1,37 @@
 const Equipes = require("../models/equipes");
-const Bilhetes = require('../models/bilhetes');
-
+const Bilhetes = require("../models/bilhetes");
 
 module.exports = {
-  // Função que faz a busca no banco.
+
   async read(request, response) {
-    const ordem = {equipe:1}
+    const ordem = { equipe: 1 };
     const appList = await Equipes.find().sort(ordem);
 
     return response.json(appList);
   },
-  // Função que cria um registro no banco.
+
   async create(request, response) {
     const appCreated = await Equipes.create(request.body);
 
-    for (let i = appCreated.numeroInicial; i <= appCreated.numeroFinal; i++) {
-      const result = await Bilhetes.findOne({bilhete: i})
-      result.equipe = appCreated.equipe
-      await result.save();
-    }
+    await Bilhetes.updateMany(
+      {
+        _id: {
+          $in: (
+            await Bilhetes.find({ equipe: "" })
+              .skip(appCreated.numeroInicial - 1)
+              .limit(appCreated.numeroFinal + 1 - appCreated.numeroInicial)
+              .sort({ bilhete: 1 })
+          ).map(function (doc) {
+            return doc._id;
+          }),
+        },
+      },
+      { $set: { equipe: appCreated.equipe } }
+    );
+
     return response.json(appCreated);
   },
 
-  // Função que deleta o registro chamado pelo :id
   async delete(request, response) {
     const { id } = request.params;
 
@@ -39,8 +48,7 @@ module.exports = {
       .json({ error: "Não foi encontrato nada para excluir" });
   },
 
-  // Função que busca registro no mongo a partir de uma condição.
-  // Ex: Buscar somente titulo com o nome igual a "Lucas".
+
   async read(request, response) {
     const priority = request.query;
 
@@ -49,7 +57,6 @@ module.exports = {
     return response.json(priorityNotes);
   },
 
-  //Função que busca um registro e altera para true ou false.
   async update(request, response) {
     const { id } = request.params;
 
