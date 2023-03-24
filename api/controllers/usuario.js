@@ -1,4 +1,5 @@
 const Usuario = require("../models/usuario");
+const Equipes = require("../models/equipes");
 
 module.exports = {
   // Função que faz a busca no banco.
@@ -9,40 +10,16 @@ module.exports = {
   },
   // Função que cria um registro no banco.
   async create(request, response) {
-    const {
-      nome,
-      email,
-      endereco,
-      idade,
-      numero,
-      numeroEmergencia,
-      senha,
-      priority,
-    } = request.body;
 
-    if (
-      !nome ||
-      !email ||
-      !endereco ||
-      !idade ||
-      !numero ||
-      !numeroEmergencia ||
-      !senha
-    ) {
-      return response
-        .status(400)
-        .json({ error: "Necessário um titulo/anotação" });
-    }
-    const appCreated = await Usuario.create({
-      nome,
-      email,
-      endereco,
-      idade,
-      numero,
-      numeroEmergencia,
-      senha,
-      priority,
-    });
+    console.log(request.body)
+
+    await Equipes.updateOne(
+      { _id: request.body.equipeId },
+      { $set: { componentesEquipe: request.body.nome } }
+    )
+ 
+    const appCreated = await Usuario.create(request.body);
+
     return response.json(appCreated);
   },
 

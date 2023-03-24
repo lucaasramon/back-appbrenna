@@ -40,17 +40,18 @@ module.exports = {
   //Função que busca um registro e altera para true ou false.
   async update(request, response) {
     const { id } = request.params;
-
-    const app = await Bilhetes.findOne({ _id: id });
-
-    if (app.priority) {
-      app.priority = false;
-    } else {
-      app.priority = true;
+  
+    let filter = { _id: id };
+    let update = { $set: request.body };
+  
+    try {
+      await Bilhetes.updateOne(filter, update);
+      const updatedDoc = await Bilhetes.findOne({_id: id});
+      return response.json(updatedDoc);
+    } catch (err) {
+      console.error(err);
+      return response.status(500).send('Erro interno do servidor');
     }
-
-    await app.save();
-
-    return response.json(app);
-  },
+  }
+  
 };

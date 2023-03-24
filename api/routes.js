@@ -32,9 +32,10 @@ routes.delete('/equipes/:id', equipes.delete);
 
 // Rota bilhetes
 routes.post("/bilhetes", bilhetes.create);
+routes.post('/bilhetesUp/:id', bilhetes.update);
 routes.get("/bilhetes", bilhetes.read);
-routes.delete("/bilhetes/:id", bilhetes.delete);
 routes.get("/bilhetes/:id", consultaBilhetes.pegarParamURL);
+routes.delete("/bilhetes/:id", bilhetes.delete);
 
 
 // Rota priority
