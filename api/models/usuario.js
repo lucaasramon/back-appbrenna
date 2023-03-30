@@ -9,6 +9,7 @@ const usuarioSchema = new mongoose.Schema({
   numero: String,
   numeroEmergencia: String,
   senha: String,
+  isAdmin: Boolean,
   priority: Boolean,
 });
 
