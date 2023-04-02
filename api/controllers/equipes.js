@@ -1,8 +1,34 @@
 const Equipes = require("../models/equipes");
 const Bilhetes = require("../models/bilhetes");
 
-module.exports = {
+async function atualizarBilhetes(equipeId, res) {
+  const equipe = await Equipes.find({ _id: equipeId });
+  const bilhetes = await Bilhetes.find({
+    bilhete: { $gte: equipe[0].numeroInicial, $lte: equipe[0].numeroFinal },
+  });
+  let hasError = false;
 
+
+  await Promise.all(
+    bilhetes.map(async (bilhete) => {
+      if (bilhete.equipe != "") {
+        hasError = true;
+      } else {
+        bilhete.equipe = equipe[0].equipe;
+        await bilhete.save();
+      }
+      // res.json({ message: "Bilhetes atualizados com sucesso!" });
+    })
+  );
+
+  if (hasError) {
+    res.status(404).json({ message: "Esses bilhetes já estão sendo utilizados" });
+  } else {
+    res.json({ message: "Bilhetes atualizados com sucesso!" });
+  }
+}
+
+module.exports = {
   async read(request, response) {
     const ordem = { equipe: 1 };
     const appList = await Equipes.find().sort(ordem);
@@ -11,25 +37,8 @@ module.exports = {
   },
 
   async create(request, response) {
-    const appCreated = await Equipes.create(request.body);
-
-    await Bilhetes.updateMany(
-      {
-        _id: {
-          $in: (
-            await Bilhetes.find({ equipe: "" })
-              .skip(appCreated.numeroInicial - 1)
-              .limit(appCreated.numeroFinal + 1 - appCreated.numeroInicial)
-              .sort({ bilhete: 1 })
-          ).map(function (doc) {
-            return doc._id;
-          }),
-        },
-      },
-      { $set: { equipe: appCreated.equipe } }
-    );
-
-    return response.json(appCreated);
+      const novaEquipe = await Equipes.create(request.body);
+      await atualizarBilhetes(novaEquipe._id, response);
   },
 
   async delete(request, response) {
@@ -47,7 +56,6 @@ module.exports = {
       .status(401)
       .json({ error: "Não foi encontrato nada para excluir" });
   },
-
 
   async read(request, response) {
     const priority = request.query;
