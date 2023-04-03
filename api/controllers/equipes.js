@@ -29,16 +29,17 @@ async function atualizarBilhetes(equipeId, res) {
 }
 
 module.exports = {
+  
+  async create(request, response) {
+      const novaEquipe = await Equipes.create(request.body);
+      // await atualizarBilhetes(novaEquipe._id, response);
+  },
+
   async read(request, response) {
     const ordem = { equipe: 1 };
     const appList = await Equipes.find().sort(ordem);
 
     return response.json(appList);
-  },
-
-  async create(request, response) {
-      const novaEquipe = await Equipes.create(request.body);
-      await atualizarBilhetes(novaEquipe._id, response);
   },
 
   async delete(request, response) {
