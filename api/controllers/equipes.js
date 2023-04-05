@@ -1,10 +1,11 @@
 const Equipes = require("../models/equipes");
 const Bilhetes = require("../models/bilhetes");
 
-async function atualizarBilhetes(equipeId, res) {
-  const equipe = await Equipes.find({ _id: equipeId });
+async function atualizarBilhetes(equipeId, numeroInicial, numeroFinal, nomeEquipe, res) {
+  // const equipe = await Equipes.find({ _id: equipeId });
+  // console.log(equipe)
   const bilhetes = await Bilhetes.find({
-    bilhete: { $gte: equipe[0].numeroInicial, $lte: equipe[0].numeroFinal },
+    bilhete: { $gte: numeroInicial, $lte: numeroFinal },
   });
   let hasError = false;
 
@@ -14,7 +15,7 @@ async function atualizarBilhetes(equipeId, res) {
       if (bilhete.equipe != "") {
         hasError = true;
       } else {
-        bilhete.equipe = equipe[0].equipe;
+        bilhete.equipe = nomeEquipe;
         await bilhete.save();
       }
       // res.json({ message: "Bilhetes atualizados com sucesso!" });
@@ -29,10 +30,31 @@ async function atualizarBilhetes(equipeId, res) {
 }
 
 module.exports = {
+
+  async updateBilhete(request, response){
+    const {idEquipe, numeroInicial, numeroFinal, nomeEquipe} = request.body;
+    await Equipes.updateOne(
+      { _id: idEquipe },
+      { $push: { numerosDeBilhetes: [{
+        numeroInicial: numeroInicial,
+        numeroFinal: numeroFinal
+      }]}}).exec(
+        function(err, result) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log("Deu Certo", result)
+            // tratamento de sucesso
+          }
+        }
+      )
+  
+    // equipe.numeroDeBilhetes = bilhete
+    await atualizarBilhetes(idEquipe, numeroInicial, numeroFinal, nomeEquipe, response);
+  },
   
   async create(request, response) {
-      const novaEquipe = await Equipes.create(request.body);
-      // await atualizarBilhetes(novaEquipe._id, response);
+      await Equipes.create(request.body);
   },
 
   async read(request, response) {
@@ -42,20 +64,14 @@ module.exports = {
     return response.json(appList);
   },
 
-  async delete(request, response) {
-    const { id } = request.params;
-
-    const equipeDeleted = await Equipes.findOneAndDelete({
+  async idNumero(request, response) {
+    const {id} = request.params
+    const equipe = await Equipes.find({
       _id: id,
     });
 
-    if (equipeDeleted) {
-      return response.json(equipeDeleted);
-    }
-
-    return response
-      .status(401)
-      .json({ error: "Não foi encontrato nada para excluir" });
+      return response.json(equipe);
+  
   },
 
   async read(request, response) {
