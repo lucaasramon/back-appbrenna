@@ -3,7 +3,8 @@ const Bilhetes = require('../models/bilhetes');
 module.exports = {
   // Função que faz a busca no banco.
   async read(request, response) {
-    const appList = await Bilhetes.find();
+    const ordem = {bilhete:1}
+    const appList = await Bilhetes.find().sort(ordem);
 
     return response.json(appList);
   },
@@ -40,7 +41,7 @@ module.exports = {
   //Função que busca um registro e altera para true ou false.
   async update(request, response) {
     const { id } = request.params;
-  
+    
     let filter = { _id: id };
     let update = { $set: request.body };
   

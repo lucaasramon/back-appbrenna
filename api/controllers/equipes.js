@@ -4,7 +4,7 @@ const Bilhetes = require("../models/bilhetes");
 module.exports = {
 
   async read(request, response) {
-    const ordem = { equipe: 1 };
+    const ordem = { numeroInicial: 1 };
     const appList = await Equipes.find().sort(ordem);
 
     return response.json(appList);
@@ -12,15 +12,14 @@ module.exports = {
 
   async create(request, response) {
     const appCreated = await Equipes.create(request.body);
-
+    const ordem = { bilhete: 1 };
+    const intervalo = { "bilhete" : { "$gte" : appCreated.numeroInicial , "$lte" : appCreated.numeroFinal} };
+    
     await Bilhetes.updateMany(
       {
         _id: {
           $in: (
-            await Bilhetes.find({ equipe: "" })
-              .skip(appCreated.numeroInicial - 1)
-              .limit(appCreated.numeroFinal + 1 - appCreated.numeroInicial)
-              .sort({ bilhete: 1 })
+            await Bilhetes.find(intervalo).sort(ordem)
           ).map(function (doc) {
             return doc._id;
           }),
@@ -51,17 +50,17 @@ module.exports = {
 
   async read(request, response) {
     const priority = request.query;
-
-    const priorityNotes = await Equipes.find(priority);
+    const ordem = { numeroInicial: 1 };
+    const priorityNotes = await Equipes.find(priority).sort(ordem);
 
     return response.json(priorityNotes);
   },
 
   async update(request, response) {
     const { id } = request.params;
-
+    
     const app = await Equipes.findOne({ _id: id });
-
+    
     if (app.priority) {
       app.priority = false;
     } else {
