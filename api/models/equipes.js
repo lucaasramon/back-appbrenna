@@ -6,7 +6,11 @@ const equipesSchema = new mongoose.Schema({
   valorBilhete: Number,
   componentesEquipe: Array,
   responsavel: String,
-  numerosDeBilhetes: Array,
+  numerosDeBilhetes: [
+    {
+      numeroInicial: Number,
+      numeroFinal: Number
+    },],
   priority: Boolean,
 });
 
