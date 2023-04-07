@@ -26,8 +26,9 @@ routes.delete('/usuario/:id', auserController.delete);
 
 // Rota reestruturação Cognitiva
 routes.post('/equipes', equipes.create);
+routes.post('/updateBilhete', equipes.updateBilhete);
 routes.get('/equipes', equipes.read);
-routes.delete('/equipes/:id', equipes.delete);
+routes.get('/buscaNumeroBilheteEquipe/:id', equipes.idNumero);
 
 
 // Rota bilhetes
