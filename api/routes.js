@@ -28,6 +28,7 @@ routes.delete('/usuario/:id', auserController.delete);
 routes.post('/equipes', equipes.create);
 routes.post('/updateBilhete', equipes.updateBilhete);
 routes.get('/equipes', equipes.read);
+routes.post('/equipesUpDate/:id', equipes.update);
 routes.get('/buscaNumeroBilheteEquipe/:id', equipes.idNumero);
 
 

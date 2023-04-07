@@ -54,7 +54,9 @@ module.exports = {
   },
   
   async create(request, response) {
-      await Equipes.create(request.body);
+      const result = await Equipes.create(request.body);
+
+      return response.json(result);
   },
 
   async read(request, response) {
@@ -83,18 +85,11 @@ module.exports = {
   },
 
   async update(request, response) {
+    console.log(request.body)
     const { id } = request.params;
-
-    const app = await Equipes.findOne({ _id: id });
-
-    if (app.priority) {
-      app.priority = false;
-    } else {
-      app.priority = true;
-    }
-
-    await app.save();
-
-    return response.json(app);
+    console.log(id)
+    const result = await Equipes.updateOne({_id: id}, { $set: request.body });
+    console.log(result.modifiedCount)
+    return response.json(result);
   },
 };
