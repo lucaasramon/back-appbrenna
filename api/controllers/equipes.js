@@ -58,7 +58,7 @@ module.exports = {
   },
 
   async read(request, response) {
-    const ordem = { numeroInicial: 1 };
+    const ordem = { equipe: 1 };
     const appList = await Equipes.find().sort(ordem);
 
     return response.json(appList);
@@ -76,17 +76,17 @@ module.exports = {
 
   async read(request, response) {
     const priority = request.query;
-    const ordem = { numeroInicial: 1 };
-    const priorityNotes = await Equipes.find(priority).sort(ordem);
+
+    const priorityNotes = await Equipes.find(priority);
 
     return response.json(priorityNotes);
   },
 
   async update(request, response) {
     const { id } = request.params;
-    
+
     const app = await Equipes.findOne({ _id: id });
-    
+
     if (app.priority) {
       app.priority = false;
     } else {
