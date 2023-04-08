@@ -32,9 +32,9 @@ async function atualizarBilhetes(equipeId, numeroInicial, numeroFinal, nomeEquip
 module.exports = {
 
   async updateBilhete(request, response){
-    const {idEquipe, numeroInicial, numeroFinal, nomeEquipe} = request.body;
+    const {idEquipe, rifaId, numeroInicial, numeroFinal, nomeEquipe} = request.body;
     await Equipes.updateOne(
-      { _id: idEquipe },
+      { _id: idEquipe }, {rifaId},
       { $push: { numerosDeBilhetes: [{
         numeroInicial: numeroInicial,
         numeroFinal: numeroFinal
