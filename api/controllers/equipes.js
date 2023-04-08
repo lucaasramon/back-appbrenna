@@ -43,14 +43,13 @@ module.exports = {
 
   async updateBilhete(request, response){
     const {idEquipe, numeroInicial, numeroFinal, nomeEquipe} = request.body;
-    
     await atualizarBilhetes(idEquipe, numeroInicial, numeroFinal, nomeEquipe, response);
   },
   
   async create(request, response) {
-      const result = await Equipes.create(request.body);
+    const result = await Equipes.create(request.body);
 
-      return response.json(result);
+    return response.json(result);
   },
 
   async read(request, response) {
