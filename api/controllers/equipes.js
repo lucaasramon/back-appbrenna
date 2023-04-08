@@ -1,31 +1,41 @@
 const Equipes = require("../models/equipes");
 const Bilhetes = require("../models/bilhetes");
 
-async function atualizarBilhetes(equipeId, numeroInicial, numeroFinal, nomeEquipe, res) {
-  // const equipe = await Equipes.find({ _id: equipeId });
-  // console.log(equipe)
+async function atualizarBilhetes(idEquipe, numeroInicial, numeroFinal, nomeEquipe, res) {
   const bilhetes = await Bilhetes.find({
     bilhete: { $gte: numeroInicial, $lte: numeroFinal },
   });
   let hasError = false;
-
-
-  await Promise.all(
-    bilhetes.map(async (bilhete) => {
-      if (bilhete.equipe != "") {
-        hasError = true;
-      } else {
-        bilhete.equipe = nomeEquipe;
-        await bilhete.save();
-      }
-      // res.json({ message: "Bilhetes atualizados com sucesso!" });
-    })
-  );
+  let arrayNumeroUtilizados = []
+  for (const bilhete of bilhetes) {
+    if (bilhete.equipe != "") {
+      arrayNumeroUtilizados.push(bilhete.bilhete)
+    }
+  }
+  for (const bilhete of bilhetes) {
+    if (bilhete.equipe != "") {
+      hasError = true;
+      break;
+    }
+  }
 
   if (hasError) {
-    res.status(404).json({ message: "Esses bilhetes já estão sendo utilizados" });
+    arrayNumeroUtilizados.sort((a, b) => a - b);
+    return res.status(400).json({ message: "Esses bilhetes já estão sendo utilizados: " +  arrayNumeroUtilizados});
   } else {
-    res.json({ message: "Bilhetes atualizados com sucesso!" });
+    await Promise.all(
+      bilhetes.map(async (bilhete) => {
+        bilhete.equipe = nomeEquipe;
+        await bilhete.save();
+      })
+      );
+      await Equipes.updateOne(
+        { _id: idEquipe },
+      { $push: { numerosDeBilhetes: [{
+        numeroInicial: numeroInicial,
+        numeroFinal: numeroFinal
+      }]}})
+      return res.status(200).json({ message: "Números de bilhetes salvos com sucesso."});
   }
 }
 
@@ -33,23 +43,7 @@ module.exports = {
 
   async updateBilhete(request, response){
     const {idEquipe, numeroInicial, numeroFinal, nomeEquipe} = request.body;
-    await Equipes.updateOne(
-      { _id: idEquipe },
-      { $push: { numerosDeBilhetes: [{
-        numeroInicial: numeroInicial,
-        numeroFinal: numeroFinal
-      }]}}).exec(
-        function(err, result) {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log("Deu Certo", result)
-            // tratamento de sucesso
-          }
-        }
-      )
-  
-    // equipe.numeroDeBilhetes = bilhete
+    
     await atualizarBilhetes(idEquipe, numeroInicial, numeroFinal, nomeEquipe, response);
   },
   
@@ -85,11 +79,8 @@ module.exports = {
   },
 
   async update(request, response) {
-    console.log(request.body)
     const { id } = request.params;
-    console.log(id)
     const result = await Equipes.updateOne({_id: id}, { $set: request.body });
-    console.log(result.modifiedCount)
     return response.json(result);
   },
 };
