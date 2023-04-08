@@ -32,9 +32,9 @@ async function atualizarBilhetes(equipeId, numeroInicial, numeroFinal, nomeEquip
 module.exports = {
 
   async updateBilhete(request, response){
-    const {idEquipe, rifaId, numeroInicial, numeroFinal, nomeEquipe} = request.body;
+    const {idEquipe, numeroInicial, numeroFinal, nomeEquipe} = request.body;
     await Equipes.updateOne(
-      { _id: idEquipe }, {rifaId},
+      { _id: idEquipe }, 
       { $push: { numerosDeBilhetes: [{
         numeroInicial: numeroInicial,
         numeroFinal: numeroFinal
@@ -54,7 +54,9 @@ module.exports = {
   },
   
   async create(request, response) {
-      await Equipes.create(request.body);
+    const result = await Equipes.create(request.body);
+
+    return response.json(result);
   },
 
   async read(request, response) {
@@ -85,16 +87,9 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
 
-    const app = await Equipes.findOne({ _id: id });
-
-    if (app.priority) {
-      app.priority = false;
-    } else {
-      app.priority = true;
-    }
-
-    await app.save();
-
-    return response.json(app);
+    console.log(id)
+    const result = await Equipes.updateOne({_id: id}, { $set: request.body });
+    console.log(result.modifiedCount)
+    return response.json(result);
   },
 };
